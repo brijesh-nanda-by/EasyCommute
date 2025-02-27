@@ -20,7 +20,7 @@ public class RideMatchingService {
         Point customerStart = new Point(rideCustomer.getStartLocation()[0], rideCustomer.getStartLocation()[1]);
         Point customerDestination = new Point(rideCustomer.getDestinationLocation()[0], rideCustomer.getDestinationLocation()[1]);
 
-        Distance maxDistance = new Distance(5, Metrics.KILOMETERS); // 5 km search radius
+        Distance maxDistance = new Distance(10, Metrics.KILOMETERS); // 10 km search radius
 
         // Find hosts who start near the customer's start location
         List<RideHost> nearbyHosts = rideHostRepository.findByStartLocationNear(customerStart, maxDistance);
