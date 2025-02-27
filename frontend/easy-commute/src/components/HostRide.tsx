@@ -21,13 +21,17 @@ const HostRide: React.FC = () => {
     // Append location details if selected.
     if (sourceLocation) {
       data.sourceDisplay = sourceLocation.display_name;
-      data.sourceLat = sourceLocation.lat;
-      data.sourceLon = sourceLocation.lon;
+      data.startLocation = {
+        latitude : Number(sourceLocation.lat),
+        longitude : Number(sourceLocation.lon)
+      }
     }
     if (destinationLocation) {
       data.destinationDisplay = destinationLocation.display_name;
-      data.destinationLat = destinationLocation.lat;
-      data.destinationLon = destinationLocation.lon;
+      data.destinationLocation = {
+        latitude : Number(destinationLocation.lat),
+        longitude : Number(destinationLocation.lon)
+      }
     }
     
     // Call the createRide service method to send the data to the backend.

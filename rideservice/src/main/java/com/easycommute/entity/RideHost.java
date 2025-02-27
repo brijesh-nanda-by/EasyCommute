@@ -14,7 +14,14 @@ import lombok.NoArgsConstructor;
 public class RideHost {
     @Id
     private String rideId;
-    private String hostId;
+    private String name;
+    private String source;
+    private String destination;
+    private String date;
+    private String time;
+    private int cost;
+    private int seats;
+
 
     @GeoSpatialIndexed(type = org.springframework.data.mongodb.core.index.GeoSpatialIndexType.GEO_2DSPHERE)
     private double[] startLocation; // [longitude, latitude]
