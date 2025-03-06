@@ -1,19 +1,27 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 interface Ride {
   id: number;
+  name: string;
+  source: string;
+  destination: string;
+  date: string;
   time: string;
   seats: number;
   cost: number;
+  startLocation: number[];
+  destinationLocation: number[];
+}
+
+interface RideState {
+  rides: Ride[];
 }
 
 const RideResults: React.FC = () => {
-  const sampleRides: Ride[] = [
-    { id: 1, time: '08:00', seats: 3, cost: 10.0 },
-    { id: 2, time: '09:30', seats: 2, cost: 12.5 },
-    { id: 3, time: '11:00', seats: 4, cost: 8.75 }
-  ];
+  const location = useLocation();
+  const state = location.state as RideState | undefined;
+  const sampleRides: Ride[] = (state && state.rides) ? state.rides : [];;
 
   return (
     <div className="container">
@@ -21,6 +29,9 @@ const RideResults: React.FC = () => {
       <ul>
         {sampleRides.map((ride) => (
           <li key={ride.id}>
+            <p>
+              <strong>Name:</strong> {ride.name}
+            </p>
             <p>
               <strong>Time:</strong> {ride.time}
             </p>

@@ -1,23 +1,23 @@
 package com.easycommute.util;
 
-import com.easycommute.dto.request.RideHostRequest;
-import com.easycommute.entity.RideHost;
+import com.easycommute.entity.request.RideRequest;
+import com.easycommute.entity.db.Ride;
+import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
 
 public class RideBuilder {
 
-    public static RideHost buildRideHost(RideHostRequest rideHostRequest){
-        RideHost rideHost=new RideHost();
-//        rideHost.setRideId(rideHostRequest.getRideId());
-        rideHost.setName(rideHostRequest.getName());
-        rideHost.setSource(rideHostRequest.getSource());
-        rideHost.setDestination(rideHostRequest.getDestination());
-        rideHost.setCost(rideHostRequest.getCost());
-        rideHost.setSeats(rideHostRequest.getSeats());
-        rideHost.setDate(rideHostRequest.getDate());
-        rideHost.setTime(rideHostRequest.getTime());
+    public static Ride buildride(RideRequest rideRequest){
+        Ride ride=new Ride();
+        ride.setName(rideRequest.getName());
+        ride.setSource(rideRequest.getSource());
+        ride.setDestination(rideRequest.getDestination());
+        ride.setCost(rideRequest.getCost());
+        ride.setSeats(rideRequest.getSeats());
+        ride.setDate(rideRequest.getDate());
+        ride.setTime(rideRequest.getTime());
 
-        rideHost.setStartLocation(new double[]{rideHostRequest.getStartLocation().getLatitude(),rideHostRequest.getStartLocation().getLongitude()});
-        rideHost.setDestinationLocation(new double[]{rideHostRequest.getDestinationLocation().getLatitude(),rideHostRequest.getDestinationLocation().getLongitude()});
-        return rideHost;
+        ride.setStartLocation(new GeoJsonPoint(rideRequest.getStartLocation().getLongitude(), rideRequest.getStartLocation().getLatitude()));
+        ride.setDestinationLocation(new GeoJsonPoint(rideRequest.getDestinationLocation().getLongitude(), rideRequest.getDestinationLocation().getLatitude()));
+        return ride;
     }
 }

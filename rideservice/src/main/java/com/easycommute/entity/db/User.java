@@ -1,4 +1,4 @@
-package com.easycommute.entity;
+package com.easycommute.entity.db;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;

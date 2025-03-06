@@ -1,10 +1,10 @@
-package com.easycommute.dto.request;
+package com.easycommute.entity.request;
 
 import com.easycommute.util.Location;
 import lombok.Data;
 
 @Data
-public class RideHostRequest {
+public class RideRequest {
 //    private String rideId;// User ID of the host
     private String name;
     private String source;

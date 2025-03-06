@@ -4,11 +4,27 @@ import { useNavigate } from 'react-router-dom';
 import LocationSearch from './shared/LocationSearch';
 import { Location } from '../services/locationService';
 import { createRide, Ride } from '../services/rideService';
+import { Box, Modal } from '@mui/material';
+// import Modal from './popup/confirmationPopup';
+// import Modal from '@mui/material/Modal';
 
 const HostRide: React.FC = () => {
   const navigate = useNavigate();
   const [sourceLocation, setSourceLocation] = useState<Location | null>(null);
   const [destinationLocation, setDestinationLocation] = useState<Location | null>(null);
+  const [open, setOpen] = React.useState(false);
+
+  const popupStyle = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+  };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -38,11 +54,22 @@ const HostRide: React.FC = () => {
     try {
       const ride: Ride = await createRide(data as Ride);
       console.log('Ride created:', ride);
-      navigate('/'); // Redirect to home or another page after success.
+      // Show the success pop-up.
+      setOpen(true);
     } catch (error) {
       console.error('Failed to create ride:', error);
-      // Optionally, display an error message to the user.
+      // Optionally handle error scenarios here.
     }
+  };
+
+  const handleOk = () => {
+    setOpen(false);
+    navigate('/'); // Redirect to Home screen after closing the pop-up.
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+    navigate('/'); // Redirect to Home screen after closing the pop-up.
   };
 
   return (
@@ -94,6 +121,17 @@ const HostRide: React.FC = () => {
         </div>
         <button type="submit">Host Ride</button>
       </form>
+      {<Modal 
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+        >
+          <Box sx={popupStyle}>
+            <h2>Ride Creation Successful</h2>
+            <button onClick={handleOk}>OK</button>
+          </Box>
+      </Modal>}
     </div>
   );
 };

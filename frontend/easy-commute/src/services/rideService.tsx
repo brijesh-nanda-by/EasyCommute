@@ -28,7 +28,7 @@ export interface RideCreate {
     destinationLocation?: [];
   }
 
-const BASE_URL = "http://localhost:8080"; // Replace with your actual backend URL
+const BASE_URL = "http://localhost:8080/ride"; // Replace with your actual backend URL
 
 /**
  * Sends a POST request to create a new ride.
@@ -39,7 +39,7 @@ export const createRide = async (ride: Ride): Promise<Ride> => {
     // rideCreate = {
 
     // }
-  const response = await fetch(`${BASE_URL}/hosts/add`, {
+  const response = await fetch(`${BASE_URL}/create`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(ride),
@@ -61,18 +61,21 @@ export const createRide = async (ride: Ride): Promise<Ride> => {
  * @returns A promise that resolves to an array of Ride objects.
  */
 export const listRides = async (
-  source: string,
-  destination: string,
+  source: object,
+  destination: object,
   date: string
 ): Promise<Ride[]> => {
   // Create URL with query parameters.
-  const url = new URL(`${BASE_URL}/rides`);
-  url.searchParams.append("source", source);
-  url.searchParams.append("destination", destination);
-  url.searchParams.append("date", date);
+  const url = new URL(`${BASE_URL}/match`);
+//   url.searchParams.append("source", source);
+//   url.searchParams.append("destination", destination);
+//   url.searchParams.append("date", date);
 
+    
   const response = await fetch(url.toString(), {
-    method: "GET",
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({startLocation : source, destinationLocation : destination, date: date}),
   });
 
   if (!response.ok) {
