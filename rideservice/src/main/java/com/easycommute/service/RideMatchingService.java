@@ -1,8 +1,9 @@
 package com.easycommute.service;
 
-import com.easycommute.dto.request.RideCustomerRequest;
-import com.easycommute.entity.RideHost;
-import com.easycommute.repository.RideHostRepository;
+import com.easycommute.entity.request.RideMatchRequest;
+import com.easycommute.entity.db.Ride;
+import com.easycommute.repository.RideRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.geo.Distance;
 import org.springframework.data.geo.Metrics;
 import org.springframework.data.geo.Point;
@@ -14,26 +15,32 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class RideMatchingService {
-    private final RideHostRepository rideHostRepository;
 
-    public List<RideHost> findMatchingHosts(RideCustomerRequest rideCustomer) {
-        Point customerStart = new Point(rideCustomer.getStartLocation()[0], rideCustomer.getStartLocation()[1]);
-        Point customerDestination = new Point(rideCustomer.getDestinationLocation()[0], rideCustomer.getDestinationLocation()[1]);
+    @Autowired
+    private final RideRepository rideRepository;
+    private final Integer MAX_DISTANCE = 10;
 
-        Distance maxDistance = new Distance(10, Metrics.KILOMETERS); // 10 km search radius
+    public List<Ride> findMatchingRides(RideMatchRequest rideMatchRequest) {
+        Point customerStart = new Point(rideMatchRequest.getStartLocation().getLongitude(), rideMatchRequest.getStartLocation().getLatitude());
+        Point customerDestination = new Point(rideMatchRequest.getDestinationLocation().getLongitude(), rideMatchRequest.getDestinationLocation().getLatitude());
+
+        Distance maxDistance = new Distance(MAX_DISTANCE, Metrics.MILES); // 10 miles search radius
 
         // Find hosts who start near the customer's start location
-        List<RideHost> nearbyHosts = rideHostRepository.findByStartLocationNear(customerStart, maxDistance);
+        List<Ride> nearbyRides = rideRepository.findByStartLocationNear(customerStart, maxDistance);
 
         // Further filter by destination proximity
-        return nearbyHosts.stream()
-                .filter(host -> isDestinationNearby(host, customerDestination, maxDistance))
+        return nearbyRides.stream()
+                .filter(ride -> isDestinationNearby(ride, customerDestination, maxDistance))
+                .filter(ride -> ride.getDate()!=null && ride.getDate().equals(rideMatchRequest.getDate()))
                 .collect(Collectors.toList());
     }
 
-    private boolean isDestinationNearby(RideHost host, Point customerDestination, Distance maxDistance) {
-        List<RideHost> matches = rideHostRepository.findByDestinationLocationNear(customerDestination, maxDistance);
-        return matches.contains(host);
+    private boolean isDestinationNearby(Ride ride, Point customerDestination, Distance maxDistance) {
+        List<Ride> matches = rideRepository.findByDestinationLocationNear(customerDestination, maxDistance);
+        return matches.contains(ride);
     }
+
+
 }
 

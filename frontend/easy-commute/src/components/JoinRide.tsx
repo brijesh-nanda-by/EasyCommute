@@ -16,8 +16,8 @@ const JoinRide: React.FC = () => {
     try {
       // Call listRides using the selected locations and date.
       const rides = await listRides(
-        sourceLocation ? sourceLocation.display_name : '',
-        destinationLocation ? destinationLocation.display_name : '',
+        sourceLocation ? {latitude : sourceLocation.lat, longitude : sourceLocation.lon} : {latitute : 0.00000, longitude : 0.00000},
+        destinationLocation ? {latitude : destinationLocation.lat, longitude : destinationLocation.lon} : {latitute : 0.00000, longitude : 0.00000},
         date
       );
       console.log('Fetched Rides:', rides);
