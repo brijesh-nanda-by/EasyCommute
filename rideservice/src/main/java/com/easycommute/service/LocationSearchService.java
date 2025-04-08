@@ -1,3 +1,4 @@
+/*
 package com.easycommute.service;
 
 import com.easycommute.util.Location;
@@ -83,3 +84,4 @@ public class LocationSearchService {
     }
 }
 
+*/
