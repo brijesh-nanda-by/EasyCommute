@@ -4,6 +4,8 @@ import com.easycommute.entity.request.RideRequest;
 import com.easycommute.entity.db.Ride;
 import com.easycommute.entity.request.RideMatchRequest;
 import com.easycommute.entity.request.RideRequestAction;
+import com.easycommute.enumeration.RideAction;
+import com.easycommute.enumeration.RideStatus;
 import com.easycommute.service.RideMatchingService;
 import com.easycommute.service.RideService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +50,21 @@ public class RideController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(false);
         }
+    }
+
+    @GetMapping("/rideList")
+    public ResponseEntity<List<Ride>> getRidesByUserAndStatus(
+            @RequestParam String userId,
+            @RequestParam RideStatus status) {
+        return ResponseEntity.ok(rideService.getRidesByUserAndStatus(userId, status));
+    }
+
+    @PostMapping("/{rideId}/action")
+    public ResponseEntity<Boolean> handleRideAction(
+            @PathVariable String rideId,
+            @RequestParam String userId,
+            @RequestParam RideAction action) {
+        return ResponseEntity.ok(rideService.handleRideAction(rideId, userId, action));
     }
 }
 

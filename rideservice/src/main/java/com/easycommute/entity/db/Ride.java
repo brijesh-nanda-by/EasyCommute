@@ -9,6 +9,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -16,6 +18,7 @@ import lombok.NoArgsConstructor;
 public class Ride {
     @Id
     private String rideId;
+    private String userId;
     private String hostName;
     private String hostSource;
     private String hostDestination;
@@ -23,7 +26,9 @@ public class Ride {
     private String time;
     private int cost;
     private int totalSeats;
+    private int remainingSeats;
     private RideStatus rideStatus;
+    private List<RequestedRide> confirmedCustomers;
 
 
     @GeoSpatialIndexed(type = org.springframework.data.mongodb.core.index.GeoSpatialIndexType.GEO_2DSPHERE)

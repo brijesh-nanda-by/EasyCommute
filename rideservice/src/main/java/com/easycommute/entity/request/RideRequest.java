@@ -6,6 +6,7 @@ import lombok.Data;
 @Data
 public class RideRequest {
     //    private String rideId;// User ID of the host
+    private String userId;
     private String hostName;
     private String source;
     private String destination;

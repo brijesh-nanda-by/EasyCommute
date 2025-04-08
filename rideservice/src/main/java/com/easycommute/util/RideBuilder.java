@@ -9,11 +9,13 @@ public class RideBuilder {
 
     public static Ride buildride(RideRequest rideRequest){
         Ride ride=new Ride();
+        ride.setUserId(rideRequest.getUserId());
         ride.setHostName(rideRequest.getHostName());
         ride.setHostSource(rideRequest.getSource());
         ride.setHostDestination(rideRequest.getDestination());
         ride.setCost(rideRequest.getCost());
         ride.setTotalSeats(rideRequest.getSeats());
+        ride.setRemainingSeats(rideRequest.getSeats());
         ride.setDate(rideRequest.getDate());
         ride.setTime(rideRequest.getTime());
         ride.setRideStatus(RideStatus.CREATED);
