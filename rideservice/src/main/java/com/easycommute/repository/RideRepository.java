@@ -15,7 +15,5 @@ public interface RideRepository extends MongoRepository<Ride, String> {
 
     // Find hosts whose destination location is near the customer's destination
     List<Ride> findByDestinationLocationNear(Point destination, Distance maxDistance);
-
-    List<Ride> findByUserIdAndRideStatus(String userId, RideStatus rideStatus);
 }
 

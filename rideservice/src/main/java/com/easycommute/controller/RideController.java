@@ -1,5 +1,6 @@
 package com.easycommute.controller;
 
+import com.easycommute.entity.db.RequestedRide;
 import com.easycommute.entity.request.RideRequest;
 import com.easycommute.entity.db.Ride;
 import com.easycommute.entity.request.RideMatchRequest;
@@ -52,11 +53,18 @@ public class RideController {
         }
     }
 
-    @GetMapping("/rideList")
-    public ResponseEntity<List<Ride>> getRidesByUserAndStatus(
+    @GetMapping("/requestedRides")
+    public ResponseEntity<List<RequestedRide>> getRidesByUserAndStatus(
             @RequestParam String userId,
             @RequestParam RideStatus status) {
         return ResponseEntity.ok(rideService.getRidesByUserAndStatus(userId, status));
+    }
+
+    @GetMapping("/host/requests")
+    public ResponseEntity<List<RequestedRide>> getRequestsByRideIdAndRequestStatus(
+            @RequestParam String rideId,
+            @RequestParam RideStatus requestStatus) {
+        return ResponseEntity.ok(rideService.getRequestsByRideIdAndRequestStatus(rideId, requestStatus));
     }
 
     @PostMapping("/{rideId}/action")

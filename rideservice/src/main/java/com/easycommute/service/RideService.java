@@ -52,8 +52,11 @@ public class RideService {
         return true;
     }
 
-    public List<Ride> getRidesByUserAndStatus(String userId, RideStatus status) {
-        return rideRepository.findByUserIdAndRideStatus(userId, status);
+    public List<RequestedRide> getRidesByUserAndStatus(String userId, RideStatus status) {
+        return requestedRideRepository.findByUserIdAndRideStatus(userId, status);
+    }
+    public List<RequestedRide> getRequestsByRideIdAndRequestStatus(String rideId, RideStatus requestStatus){
+        return requestedRideRepository.findByRideIdAndRideStatus(rideId, requestStatus);
     }
 
     public boolean handleRideAction(String rideId, String userId, RideAction action) {
