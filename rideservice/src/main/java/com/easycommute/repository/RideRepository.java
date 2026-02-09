@@ -1,6 +1,7 @@
 package com.easycommute.repository;
 
 import com.easycommute.entity.db.Ride;
+import com.easycommute.enumeration.RideStatus;
 import org.springframework.data.geo.Distance;
 import org.springframework.data.geo.Point;
 import org.springframework.data.mongodb.repository.MongoRepository;
@@ -14,5 +15,7 @@ public interface RideRepository extends MongoRepository<Ride, String> {
 
     // Find hosts whose destination location is near the customer's destination
     List<Ride> findByDestinationLocationNear(Point destination, Distance maxDistance);
+
+    List<Ride> findByUserIdAndRideStatus(String userId, RideStatus rideStatus);
 }
 

@@ -1,3 +1,4 @@
+/*
 package com.easycommute.controller;
 
 import com.easycommute.service.LocationSearchService;
@@ -18,4 +19,4 @@ public class LocationController {
         return ResponseEntity.ok(locationSearchService.searchLocation(query));
     }
 }
-
+*/
